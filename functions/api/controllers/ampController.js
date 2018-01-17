@@ -8,13 +8,13 @@ exports.create_amp_document = function(req, res){
     res.json({message:'NOT IMPLEMENTED:create_amp_document'});
 };
 exports.read_amp_document = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:read_amp_documsssssents'});
+    res.json({message:'NOT IMPLEMENTED:read_amp_documents'});
 }
 exports.update_amp_document = function(req, res){
     res.json({message:'NOT IMPLEMENTED:update_amp_document'});
 }
 exports.delete_amp_document = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:delte_amp_document'});
+    res.json({message:'NOT IMPLEMENTED:delete_amp_document'});
 } 
 /*
 
@@ -24,7 +24,7 @@ Heads
 
 */
 exports.list_all_amp_heads = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_heads'});
+    res.json({message:'NOT IMPLEMENTED:list_amp_heads'});
 
 }
 exports.create_amp_heads = function(req, res){
@@ -32,17 +32,17 @@ exports.create_amp_heads = function(req, res){
 
 }
 exports.read_amp_head = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_heads'});
+    res.json({message:'NOT IMPLEMENTED:read_amp_heads'});
 
 
 }
 exports.update_amp_head = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_heads'});
+    res.json({message:'NOT IMPLEMENTED:update_amp_heads'});
 
    
 }
 exports.delete_amp_head = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_heads'});
+    res.json({message:'NOT IMPLEMENTED:delete_amp_heads'});
    
 }
 /*
@@ -53,7 +53,7 @@ Body
 
 */
 exports.list_all_amp_body = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_body'});
+    res.json({message:'NOT IMPLEMENTED:list_amp_body'});
 
     
 }
@@ -62,18 +62,18 @@ exports.create_amp_body = function(req, res){
     
 }
 exports.read_amp_body = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_body'});
+    res.json({message:'NOT IMPLEMENTED:read_amp_body'});
 
     
 }
 exports.update_amp_body = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_body'});
+    res.json({message:'NOT IMPLEMENTED:update_amp_body'});
 
     
 
 }
 exports.delete_amp_body = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_body'});
+    res.json({message:'NOT IMPLEMENTED:delete_amp_body'});
 
    
 }
@@ -85,7 +85,7 @@ images
 
 */
 exports.list_all_amp_img = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_img'});
+    res.json({message:'NOT IMPLEMENTED:list_amp_img'});
 
    
 }
@@ -95,17 +95,17 @@ exports.create_amp_img = function(req, res){
     
 }
 exports.read_amp_img = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_img'});
+    res.json({message:'NOT IMPLEMENTED:read_amp_img'});
 
    
 }
 exports.update_amp_img = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_img'});
+    res.json({message:'NOT IMPLEMENTED:update_amp_img'});
 
     
 }
 exports.delete_amp_img = function(req, res){
-    res.json({message:'NOT IMPLEMENTED:create_amp_it'});
+    res.json({message:'NOT IMPLEMENTED:delte_amp_it'});
 
     
 }
