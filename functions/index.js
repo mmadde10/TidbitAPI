@@ -1,82 +1,56 @@
 const functions = require('firebase-functions');
-var bodyParser = require('body-parser');
-const express = require('express');
-var app = express();
-
-//TODO: CLEAN THIS UP
-
-//Admin
 const admin = require('firebase-admin');
-var serviceAccount = require('./secure/serviceAccountKey.json');
+admin.initializeApp(functions.config().firebase);
+const express = require('express');
+const cookieParser = require('cookie-parser')();
+const cors = require('cors')({origin: true});
+const app = express();
+var initRestApi = require('./api/api');
+var config = require('./secure/config');
+var serviceAccount = require('../../secure/serviceAccountKey');
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://tidbit-f2667.firebaseio.com'
+
+const validateFirebaseIdToken = (req, res, next) => {
+    console.log('Check if request is authorized with Firebase ID token');
+  
+    if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) &&
+        !req.cookies.__session) {
+      console.error('No Firebase ID token was passed as a Bearer token in the Authorization header.',
+          'Make sure you authorize your request by providing the following HTTP header:',
+          'Authorization: Bearer <Firebase ID Token>',
+          'or by passing a "__session" cookie.');
+      res.status(403).send('Unauthorized');
+      return;
+    }
+
+    let idToken;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      console.log('Found "Authorization" header');
+      // Read the ID Token from the Authorization header.
+      idToken = req.headers.authorization.split('Bearer ')[1];
+    } 
+    else {
+      console.log('Found "__session" cookie');
+      // Read the ID Token from cookie.
+      idToken = req.cookies.__session;
+    }
+    admin.auth().verifyIdToken(idToken).then(decodedIdToken => {
+      console.log('ID Token correctly decoded', decodedIdToken);
+      req.user = decodedIdToken;
+      next();
+    }).catch(error => {
+      console.error('Error while verifying Firebase ID token:', error);
+      res.status(403).send('Unauthorized');
+    });
+};
+
+app.use(cors);
+app.use(cookieParser);
+app.use(validateFirebaseIdToken);
+app.get('/hello', (req, res) => {
+  res.send(`Hello ${req.user.name}`);
 });
-app.route('/')
-        .get(function(request, response){
-        response.json({message:'Welcome to TidbitAPI!'});
-});
-
-
-/*
-
-AMP Routes
-
-
-*/
-app.route('/amp')
-        .get(function(request, response){
-        response.json({message:'CRUD AMP DOCUMENTS HERE!'});
-});
-
-
-var ampController = require('./api/controllers/ampController');
-
-app.route('/amp/document')
-    .get(ampController.list_all_amp_documents)
-    .post(ampController.create_amp_document);
-
-app.route('/amp/document/:ampDocumentId')
-    .get(ampController.read_amp_document)
-    .put(ampController.update_amp_document)
-    .delete(ampController.delete_amp_document);
-
-app.route('/amp/head/')
-    .get(ampController.list_all_amp_heads)
-    .post(ampController.create_amp_heads);
-
-app.route('/amp/body/')
-    .get(ampController.list_all_amp_body)  
-    .post(ampController.create_amp_body);
-
-app.route('/amp/head/:ampHeadId')
-    .get(ampController.read_amp_head)
-    .put(ampController.update_amp_head)
-    .delete(ampController.delete_amp_head);
-
-app.route('/amp/body/:ampBodyId')
-    .get(ampController.read_amp_body)
-    .put(ampController.update_amp_body)
-    .delete(ampController.delete_amp_body);
-
-app.route('/amp/img/')
-    .get(ampController.list_all_amp_img)  
-    .post(ampController.create_amp_img);
-
-app.route('/amp/img/:ampImgId')
-    .get(ampController.read_amp_img)
-    .put(ampController.update_amp_img)
-    .delete(ampController.delete_amp_img);
-
-app.route('/amp/paragraph/')
-    .get(ampController.list_all_amp_Paragraph)  
-    .post(ampController.create_amp_Paragraph);
-
-app.route('/amp/paragraph/:ampParagraphId')
-    .get(ampController.read_amp_Paragraph)
-    .put(ampController.update_amp_Paragraph)
-    .delete(ampController.delete_amp_Paragraph);    
+initRestApi(app);
 
 
 exports.app = functions.https.onRequest(app);

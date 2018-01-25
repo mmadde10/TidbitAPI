@@ -63,3 +63,6 @@ typings/
 # Mac Store
 .DS_Store
 
+# Secured Information 
+functions/secure/
+
