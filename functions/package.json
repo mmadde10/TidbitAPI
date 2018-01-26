@@ -12,6 +12,7 @@
     "@google-cloud/functions-emulator": "^1.0.0-alpha.29",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "firebase": "^4.8.2",
     "firebase-admin": "^5.6.0",
     "firebase-functions": "^0.8.0",
     "google-cloud": "^0.57.0",
